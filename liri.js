@@ -4,27 +4,43 @@ var axios = require("axios");
 // var spotify = new Spotify(keys.spotify)
 // console.log(spotify)
 var command = process.argv[2];
-var input1 = process.argv[3];
-var input2 = process.argv[4];
-var movieQueryUrl="";
+var input = process.argv[3];
+var movieQueryUrl = "";
+var concertQueryUrl = "";
 // const concertQueryUrl;
 // const spotifyQueryUrl;
 var displayMovie = result => {
-    console.log(result.data.Title);
-    console.log(result.data.Year);
-    console.log(result.data.imdbRating);
-    console.log(result.data.Ratings[1].Source +" "+result.data.Ratings[1].Value);
-    console.log(result.data.Country);
-    console.log(result.data.Language);
-    console.log(result.data.Plot);
-    console.log(result.data.Actors);
+    console.log(result.Title);
+    console.log(result.Year);
+    console.log(result.imdbRating);
+    console.log(result.Ratings[1].Source + " " + result.Ratings[1].Value);
+    console.log(result.Country);
+    console.log(result.Language);
+    console.log(result.Plot);
+    console.log(result.Actors);
+
+}
+
+var displayConcert = result => {
+    console.log(result);
+
+    for (var i = 0; i < result.length; i++) {
+        console.log(result[i].venue.name);
+        console.log(result[i].venue.country);
+        console.log(result[i].venue.region);
+        console.log(result[i].venue.city);
+        console.log(result[i].datetime);
+        console.log("______________________")
+    }
 
 }
 var apiCall = (queryUrl) => {
     axios.get(queryUrl).then(
         function (response) {
             if (command === "movie-this") {
-                displayMovie(response);
+                displayMovie(response.data);
+            } else if (command === "concert-this") {
+                displayConcert(response.data);
             }
         })
         .catch(function (error) {
@@ -53,24 +69,24 @@ var apiCall = (queryUrl) => {
 
 switch (command) {
     case "concert-this":
-
+        concertQueryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
+        apiCall(concertQueryUrl);
         return;
 
     case "spotify-this-song":
         return;
 
     case "movie-this":
-        if (input1==="Undefined"){
-            console.log(input1)
-            movieQueryUrl = "https://www.omdbapi.com/?t=MrNobody&apikey=2ccc910c";
-            console.log(movieQueryUrl)
-            apiCall(movieQueryUrl);
-        }else{
-        movieQueryUrl = "https://www.omdbapi.com/?t=" + input1 + "&apikey=2ccc910c";
-        console.log(input1)
+        // if (input1==="Undefined"){
+        //     console.log(input1)
+        //     movieQueryUrl = "https://www.omdbapi.com/?t=MrNobody&apikey=2ccc910c";
+        //     console.log(movieQueryUrl)
+        //     apiCall(movieQueryUrl);
+        // }else{
+        movieQueryUrl = "https://www.omdbapi.com/?t=" + input + "&apikey=2ccc910c";
         apiCall(movieQueryUrl);
         return;
-        }
+    // }
     case "do-what-it-says":
         return;
 
