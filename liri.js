@@ -1,14 +1,20 @@
 require("dotenv").config();
 var axios = require("axios");
+var moment = require('moment');
+// var Spotify = require('node-spotify-api');
+moment().format();
 // var keys = require("./keys.js");
 // var spotify = new Spotify(keys.spotify)
-// console.log(spotify)
+// const spotifyID =spotify.credentials.id;
+// const spotifySecret = spotify.credentials.secret;
+
+
+//--------------------------------------------------------------
 var command = process.argv[2];
 var input = process.argv[3];
 var movieQueryUrl = "";
 var concertQueryUrl = "";
-// const concertQueryUrl;
-// const spotifyQueryUrl;
+var spotifyQueryUrl = "";
 var displayMovie = result => {
     console.log(result.Title);
     console.log(result.Year);
@@ -29,18 +35,31 @@ var displayConcert = result => {
         console.log(result[i].venue.country);
         console.log(result[i].venue.region);
         console.log(result[i].venue.city);
-        console.log(result[i].datetime);
+        console.log(moment(result[i].datetime).format("MM/DD/YYYY"));
         console.log("______________________")
     }
 
 }
-var apiCall = (queryUrl) => {
+
+var displaySong = results => {
+    console.log(results);
+}
+var apiCall = queryUrl => {
     axios.get(queryUrl).then(
         function (response) {
-            if (command === "movie-this") {
+            
+            switch(command){
+                case "movie-this":
                 displayMovie(response.data);
-            } else if (command === "concert-this") {
+                break;
+                case "concert-this":
                 displayConcert(response.data);
+                break;
+                case "spotify-this-song":
+                displaySong(response);
+                break;
+                case "do-what-it-says":
+                break;
             }
         })
         .catch(function (error) {
@@ -66,6 +85,20 @@ var apiCall = (queryUrl) => {
 
 }
 
+var spotifyCall = () =>{
+    var Spotify = require('node-spotify-api');
+    var keys = require("./keys.js");
+    var spotify = new Spotify(keys.spotify);
+    spotify
+  .search({ type: 'track', query: input })
+  .then(function(response) {
+    console.log(response.tracks);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+}
+
 
 switch (command) {
     case "concert-this":
@@ -74,6 +107,8 @@ switch (command) {
         return;
 
     case "spotify-this-song":
+            // spotifyQueryUrl = "https://api.spotify.com/v1/search?q="+input+"&type=track&market=US&limit=10&offset=5";
+            spotifyCall();
         return;
 
     case "movie-this":
