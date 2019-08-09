@@ -45,15 +45,14 @@ var displaySong = results => {
         console.log("______________________")
     }
 }
-var apiCall = queryUrl => {
+var apiCall = (queryUrl,data) => {
     axios.get(queryUrl).then(
         function (response) {
-            if (command==="movie-this"){
+            if (command==="movie-this"||data==="movie-this"){
                 displayMovie(response.data);
-            }else if(command==="concert-this"){
+            }else if(command==="concert-this"||data==="concert-this"){
                 displayConcert(response.data);
             }
-           
         })
         .catch(function (error) {
             if (error.response) {
@@ -91,7 +90,6 @@ var spotifyCall = () => {
             console.log(err);
         });
 }
-
 
 switch (command) {
     case "concert-this":
@@ -132,12 +130,19 @@ switch (command) {
                   input = dataArr[1];
                   spotifyCall()
               }
-            //   else if(dataArr[0]==="concert-this"){
-            //       input = dataArr[1];
-            //       concertQueryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
-            //       apiCall(concertQueryUrl);
+              else if(dataArr[0]==="concert-this"){
+                  input = dataArr[1];
+                  
+                 concertQueryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
+                  apiCall(concertQueryUrl,dataArr[0]);
 
-            //   }
+              }else if(dataArr[0]==="movie-this"){
+                input = dataArr[1];
+                
+                movieQueryUrl = "https://www.omdbapi.com/?t=" + input + "&apikey=2ccc910c";
+                apiCall( movieQueryUrl,dataArr[0]);
+
+            }
             });
             
         return;
