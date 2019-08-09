@@ -21,7 +21,6 @@ var displayMovie = result => {
 }
 
 var displayConcert = result => {
-    console.log(result);
 
     for (var i = 0; i < result.length; i++) {
         console.log(result[i].venue.name);
@@ -46,6 +45,7 @@ var displaySong = results => {
     }
 }
 var apiCall = (queryUrl,data) => {
+
     axios.get(queryUrl).then(
         function (response) {
             if (command==="movie-this"||data==="movie-this"){
@@ -118,12 +118,10 @@ switch (command) {
                 return console.log(error);
               }
             
-              // We will then print the contents of data
-              console.log(data);
             
               // Then split it by commas (to make it more readable)
               var dataArr = data.split(",");
-            
+              
               // We will then re-display the content as an array for later use.
 
               if (dataArr[0]==="spotify-this-song"){
@@ -134,7 +132,7 @@ switch (command) {
                   input = dataArr[1];
                   
                  concertQueryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
-                  apiCall(concertQueryUrl,dataArr[0]);
+                  apiCall( concertQueryUrl,dataArr[0]);
 
               }else if(dataArr[0]==="movie-this"){
                 input = dataArr[1];
