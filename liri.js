@@ -76,7 +76,19 @@ var apiCall = (queryUrl,data) => {
         });
 
 }
-
+var spotifyDefault = () => {
+    var Spotify = require('node-spotify-api');
+    var keys = require("./keys.js");
+    var spotify = new Spotify(keys.spotify);
+    spotify
+        .search({ type: 'track', query:"The Sign"})
+        .then(function (response) {
+            displaySong(response.tracks.items);
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
 var spotifyCall = () => {
     var Spotify = require('node-spotify-api');
     var keys = require("./keys.js");
@@ -90,6 +102,16 @@ var spotifyCall = () => {
             console.log(err);
         });
 }
+
+
+    if (command==="movie-this"&&input===undefined){
+        concertQueryUrl = "https://www.omdbapi.com/?t=Mr Nobody&apikey=2ccc910c";
+        apiCall(concertQueryUrl);  
+    }else if (command==="spotify-this-song"&&input===undefined){
+        spotifyDefault();
+    } 
+
+
 
 switch (command) {
     case "concert-this":
