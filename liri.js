@@ -1,13 +1,24 @@
+
+
+
+//Call all the dependencies needed to run this application
 require("dotenv").config();
 var axios = require("axios");
 var moment = require('moment');
 moment().format();
 
 //--------------------------------------------------------------
+//Set variables for the arguments set by the user
+//Set variables for the API calls 
 var command = process.argv[2];
 var input = process.argv[3];
 var movieQueryUrl = "";
 var concertQueryUrl = "";
+
+
+//Functions-----------------------------------------------------------------------------
+
+//Display Movie function will console log to the movie-this results
 var displayMovie = result => {
     console.log(result.Title);
     console.log(result.Year);
@@ -20,6 +31,8 @@ var displayMovie = result => {
 
 }
 
+
+//Display Concert function will console log to the concert-this results
 var displayConcert = result => {
 
     for (var i = 0; i < result.length; i++) {
@@ -33,6 +46,8 @@ var displayConcert = result => {
 
 }
 
+
+//Display Song function will console log to the spotify-this-song results
 var displaySong = results => {
     for (var i = 0; i < results.length; i++) {
         
@@ -44,6 +59,9 @@ var displaySong = results => {
         console.log("______________________")
     }
 }
+
+
+//the apiCall function makes a call for the OMDB or Bandsintown API depending on the command set by the user
 var apiCall = (queryUrl,data) => {
 
     axios.get(queryUrl).then(
@@ -76,6 +94,10 @@ var apiCall = (queryUrl,data) => {
         });
 
 }
+
+//This function makes the call to the spotify API and gets the song's information if the user DOES NOT type a song
+//The default is The Sign
+
 var spotifyDefault = () => {
     var Spotify = require('node-spotify-api');
     var keys = require("./keys.js");
@@ -89,6 +111,8 @@ var spotifyDefault = () => {
             console.log(err);
         });
 }
+
+//This function makes the call to the spotify API and gets the song's information based on the user's input
 var spotifyCall = () => {
     var Spotify = require('node-spotify-api');
     var keys = require("./keys.js");
@@ -103,31 +127,27 @@ var spotifyCall = () => {
         });
 }
 
-
+//Condition statements to generate defalut values if the user does not type an input value
     if (command==="movie-this"&&input===undefined){
         concertQueryUrl = "https://www.omdbapi.com/?t=Mr Nobody&apikey=2ccc910c";
-        apiCall(concertQueryUrl);  
-    }else if (command==="spotify-this-song"&&input===undefined){
+        apiCall(concertQueryUrl);
+    }else if (command==="movie-this"){
+        movieQueryUrl = "https://www.omdbapi.com/?t=" + input + "&apikey=2ccc910c";
+        apiCall(movieQueryUrl);
+    }else if(command==="spotify-this-song"&&input===undefined){
         spotifyDefault();
-    } 
+    }else if (command==="spotify-this-song"){
+        spotifyCall();
+    }
 
 
+//Checks wich command the user set's and calls the appropiate api function.
 
 switch (command) {
     case "concert-this":
         concertQueryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
         apiCall(concertQueryUrl);
         return;
-
-    case "spotify-this-song":
-        spotifyCall();
-        return;
-
-    case "movie-this":
-        movieQueryUrl = "https://www.omdbapi.com/?t=" + input + "&apikey=2ccc910c";
-        apiCall(movieQueryUrl);
-        return;
-    
     case "do-what-it-says":
             var fs = require("fs");
 
