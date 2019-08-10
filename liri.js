@@ -11,6 +11,7 @@ moment().format();
 //Set variables for the arguments set by the user
 //Set variables for the API calls 
 var command = process.argv[2];
+//we slice and join the user input so the user does not have to use ""
 var input = process.argv.slice(3).join(" ");
 var movieQueryUrl = "";
 var concertQueryUrl = "";
