@@ -13,7 +13,10 @@ Create a condition statement to check if the user did not input a title and it w
 Challenges I found were using the spotify API documentation to make the calls and displaying the default responses if the uses leaves the input blank.
 
 images/concert-this.JPG
+https://github.com/jcardenas0917/liri-node-app/blob/9bbe60e0aa9d2247578ed2bc18bf3e28eb434dc9/images/concert-this.JPG
 
 images/movie-this.JPG
+https://github.com/jcardenas0917/liri-node-app/blob/master/images/movie-this.JPG
 
 images/spotify-this-song.JPG
+https://github.com/jcardenas0917/liri-node-app/blob/master/images/spotify-this-song.JPG
