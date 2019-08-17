@@ -128,13 +128,13 @@ var spotifyCall = () => {
 }
 
 //Condition statements to generate defalut values if the user does not type an input value
-    if (command==="movie-this"&&input===undefined){
+    if (command==="movie-this"&&!input){
         concertQueryUrl = "https://www.omdbapi.com/?t=Mr Nobody&apikey=2ccc910c";
         apiCall(concertQueryUrl);
     }else if (command==="movie-this"){
         movieQueryUrl = "https://www.omdbapi.com/?t=" + input + "&apikey=2ccc910c";
         apiCall(movieQueryUrl);
-    }else if(command==="spotify-this-song"&&input===undefined){
+    }else if(command==="spotify-this-song"&&!input){
         spotifyDefault();
     }else if (command==="spotify-this-song"){
         spotifyCall();
