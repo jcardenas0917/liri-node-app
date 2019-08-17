@@ -6,7 +6,14 @@ This application calls the OMDB to using the movie-this command to show the movi
 This application calls the bandsintown API using the concert-this command to show the name venue and date.  The date is formated using moment.js
 
 I used a switch case to check each command and call the proper api calls.
-I also used the fs library to read the text from random and create a do-what-it-says command.  This pulls the text and console logs the answer just like the other 3 commands. 
+I also used the fs library to read the text from random and create a do-what-it-says command.  This pulls the text and console logs the answer just like the other 3 commands.
+
+Create a condition statement to check if the user did not input a title and it will display the default for spotigy-me-this and movie-me-this
 
 Challenges I found were using the spotify API documentation to make the calls and displaying the default responses if the uses leaves the input blank.
 
+images/concert-this.JPG
+
+images/movie-this.JPG
+
+images/spotify-this-song.JPG
