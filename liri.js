@@ -47,7 +47,6 @@ var displayConcert = result => {
 
 }
 
-
 //Display Song function will console log to the spotify-this-song results
 var displaySong = results => {
     for (var i = 0; i < results.length; i++) {
